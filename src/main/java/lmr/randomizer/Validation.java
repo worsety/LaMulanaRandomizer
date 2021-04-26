@@ -16,22 +16,22 @@ public class Validation {
 
         List<String> locations = new ArrayList<>();
         List<String> items = new ArrayList<>();
-        if(customPlacementData.getStartingWeapon() != null) {
-            if(Settings.getStartingItemsIncludingCustom().contains(customPlacementData.getStartingWeapon())) {
+        for (var weapon : customPlacementData.getStartingWeapons()) {
+            if(Settings.getStartingItemsIncludingCustom().contains(weapon)) {
                 JOptionPane.showMessageDialog(randomizerUI,
-                        "Custom starting weapon cannot be the same as starting item" + customPlacementData.getStartingWeapon() + " not valid with current settings for starting item",
+                        "Custom starting weapon cannot be the same as starting item" + weapon + " not valid with current settings for starting item",
                         "Custom placement error", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
 
-            if(customPlacementData.getRemovedItems().contains(customPlacementData.getStartingWeapon())) {
+            if(customPlacementData.getRemovedItems().contains(weapon)) {
                 JOptionPane.showMessageDialog(randomizerUI,
                         "Cannot remove starting weapon",
                         "Custom placement error", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
 
-            if(ItemRandomizer.ALL_SUBWEAPONS.contains(customPlacementData.getStartingWeapon())) {
+            if(ItemRandomizer.ALL_SUBWEAPONS.contains(weapon)) {
                 if(!Settings.isAllowSubweaponStart()) {
                     JOptionPane.showMessageDialog(randomizerUI,
                             "Custom starting weapon not enabled",
@@ -39,8 +39,8 @@ public class Validation {
                     return false;
                 }
             }
-            else if(DataFromFile.MAIN_WEAPONS.contains(customPlacementData.getStartingWeapon())) {
-                if("Whip".equals(customPlacementData.getStartingWeapon())) {
+            else if(DataFromFile.MAIN_WEAPONS.contains(weapon)) {
+                if("Whip".equals(weapon)) {
                     if(!Settings.isAllowWhipStart()) {
                         JOptionPane.showMessageDialog(randomizerUI,
                                 "Custom starting weapon not enabled",
@@ -58,7 +58,7 @@ public class Validation {
             }
             else {
                 JOptionPane.showMessageDialog(randomizerUI,
-                        "Invalid starting weapon: " + customPlacementData.getStartingWeapon(),
+                        "Invalid starting weapon: " + weapon,
                         "Custom placement error", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
@@ -688,14 +688,14 @@ public class Validation {
                 return false;
             }
 //                if(!Settings.isRandomizeEnemies()) {
-//                    JOptionPane.showMessageDialog(this,
+//                    JOptionPane.showMessageDialog(randomizerUI,
 //                            String.format("The setting \"%s\" is required for this mode",
 //                                    Translations.getText("enemies.randomizeEnemies")),
 //                            "Randomizer error", JOptionPane.ERROR_MESSAGE);
 //                    return false;
 //                }
 //                if(!Settings.isRandomizeStartingLocation()) {
-//                    JOptionPane.showMessageDialog(this,
+//                    JOptionPane.showMessageDialog(randomizerUI,
 //                            String.format("The setting \"%s\" is required for this mode",
 //                                    Translations.getText("randomization.randomizeStartingLocation")),
 //                            "Randomizer error", JOptionPane.ERROR_MESSAGE);
