@@ -466,10 +466,13 @@ public class Main {
 
                 progressDialog.updateProgress(60, Translations.getText("restore.msd"));
 
-                fileOutputStream = new FileOutputStream(new File(Settings.getLaMulanaBaseDir() + "/data/mapdata/map13.msd"));
-                Files.copy(new File("map13.msd.bak").toPath(), fileOutputStream);
-                fileOutputStream.flush();
-                fileOutputStream.close();
+                File msdFile = new File("map13.msd.bak");
+                if(msdFile.exists()) {
+                    fileOutputStream = new FileOutputStream(new File(Settings.getLaMulanaBaseDir() + "/data/mapdata/map13.msd"));
+                    Files.copy(msdFile.toPath(), fileOutputStream);
+                    fileOutputStream.flush();
+                    fileOutputStream.close();
+                }
 
                 progressDialog.updateProgress(100, Translations.getText("restore.done"));
 
